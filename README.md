@@ -47,16 +47,26 @@ partition-info	Lists information on all partitions in the library.
 Some commands accept an input file (specified with the --input-file flag) in order to push information to the script. This section will explain how to configure those commands. With the exception of newlines, do not enter white space in these files.
 
 #### Eject Files
-Eject files are a list of tapes or slots to be ejected. Options can either be a slot, a drive, or a specific tape. Each option should be on its own line. A colon (:) must be used to separate the source type (slot, drive, barcode or bc) and the source value (address or barcode) to be ejected. For tape barcodes, only the barcode can be specified. In the case of a single barcode, no source type needs to be specified. The eject-list command searches for available 
+Eject files are a list of tapes or slots to be ejected. Options can either be a slot, a drive, or a specific tape. Each option should be on its own line. A colon (:) must be used to separate the source type (slot, drive, barcode or bc) and the source value (address or barcode) to be ejected. For tape barcodes, only the barcode can be specified. In the case of a single barcode, no source type needs to be specified. The eject-list command searches for available entry/exit slots (mailslots) and moves the selected tapes to the first available tapes. If more tapes are specified than available entry/exit slos, the eject file will be updated to contain just the remaining moves. This allows the command to be repeated until all ejects are completed.
 
-##### Sample File
-barcode:000001L8
-bc:000002L8
-000003L8
-slot:1.5
+##### Sample File (ejects.txt)
+barcode:000001L8  
+bc:000002L8  
+000003L8  
+slot:1.5  
 
 #### Move Files
-Move files are a list of tape moves.
-#### Sample File
+Move files are a list of tape moves between slots and drives. Both a source and a target location must be specified in the file with a single move command on each line. A colon (:) must be used to separate the source/target type (slot, drive, barcode or bc) and the source/target value (address or barcode) to be ejected. Tape barcodes can only be used to specify a source location. For tape barcodes, only the barcode can be specified. In the case of a single barcode, no source type needs to be specified. The source and target location must be separated with an angle bracket (>).  
+
+Moves to entry/exit slots are possible with this command. The library references the entry/exit slot as a regular slot and can be referenced with the slot:#.# format.
+
+ATTENTION: The Spectra Stack does allow cross-partition moves via the API. Ensure your moves are contained to the same partition otherwise the media may not be accessible to the backup software.
+
+#### Sample File (moves.txt)
+slot:1.1>slot:1.73  
+drive:1>slot:1.2  
+bc:000001L8>drive:1  
+000002L8>drive:2  
+
 ## Errors
 blue_api stores logs in the log/ sub-directory for the program. The name of the file is bluevision.log
