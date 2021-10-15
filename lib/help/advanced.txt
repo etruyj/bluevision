@@ -1,0 +1,8 @@
+Advanced Commands
+
+These commands perform more complex tasks on the results of the basic API commands in order to expand the functionality of the API.
+
+eject-list	Ejects all the tapes or slots specified in an eject list file. Requires --input-file
+list-partitions	Prints all partition names.
+move-list	Executes the moves specified in a move list file. Requires --input-file
+
