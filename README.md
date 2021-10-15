@@ -3,6 +3,8 @@
 ## Description
 blue_api is a command line script for both linux and Windows (.bat) environments to allow automated administration a Spectra Logic Stack tape library. This is a work in progress that is being expanded as needed. Current it only allows for automating tape moves and tape ejection along with the API calls necessary for these commands to work. If any features are desired, please log them in the Issues as enhancement requests.
 
+This code uses Google's Gson for parsing JSON API responses and requires JDK 14 or higher to run.
+
 ## Using
 blue_api is a command line tool. After decompressing the tar or zip file, nagivate to the bin directory to find the blue_api shell or batch script. Windows users will use the batch script. Linux/Mac OS users will use the shell script to execute commands.
 
