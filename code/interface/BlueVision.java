@@ -53,6 +53,9 @@ public class BlueVision
 				PartitionInfo[] partitions = controller.partitionInfo(ip, port);
 				Output.print(partitions, outputFormat);
 				break;
+			case "protect-mailslots":
+				controller.protectMailSlots(ip, port, option1, true);
+				break;
 			case "default":
 				Output.print("Invalid command selected. Please used -c help for a list of valid commands.");
 				break;

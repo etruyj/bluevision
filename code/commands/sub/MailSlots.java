@@ -15,7 +15,7 @@ public class MailSlots
 	{
 		ArrayList<String> mailslots = new ArrayList<String>();
 
-		Inventory inv = library.libraryInventory(ip, port);
+		Inventory inv = library.libraryInventory(ip, port, partition);
 
 		for(int i=0; i<inv.slotCount(); i++)
 		{
@@ -32,7 +32,7 @@ public class MailSlots
 	{
 		ArrayList<String> mailslots = new ArrayList<String>();
 
-		Inventory inv = library.libraryInventory(ip, port);
+		Inventory inv = library.libraryInventory(ip, port, partition);
 
 		for(int i=0; i<inv.slotCount(); i++)
 		{

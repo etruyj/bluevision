@@ -69,18 +69,26 @@ public class BlueController
 		move.DestType = target;
 		move.DestAddress = target_address;
 
-		return library.moveMedia(ip_address, port, move);
+		String responseLine = "Move: " + move.SrcType + ":" + move.SrcAddress 
+			+ " > " + move.DestType + ":" + move.DestAddress + "...\t";
+
+		return responseLine + library.moveMedia(ip_address, port, move);
 	}
 
 	public void moveList(String ip_address, String port, String file_name, String partition)
 	{
 		String partition_num = partition;
 
-		advanced.moveList(ip_address, port, file_name, partition_num);
+		advanced.moveList(ip_address, port, partition_num, file_name);
 	}
 
 	public PartitionInfo[] partitionInfo(String ip_address, String port)
 	{
 		return library.partitionInfo(ip_address, port);
+	}
+
+	public void protectMailSlots(String ip_address, String port, String partition, boolean printToShell)
+	{
+		advanced.protectMailSlotTapes(ip_address, port, partition, printToShell);
 	}
 }

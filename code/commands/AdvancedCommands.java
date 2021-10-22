@@ -5,6 +5,7 @@ import com.socialvagrancy.bluevision.commands.sub.BarcodeSlot;
 import com.socialvagrancy.bluevision.commands.sub.EjectTapes;
 import com.socialvagrancy.bluevision.commands.sub.MailSlots;
 import com.socialvagrancy.bluevision.commands.sub.MoveList;
+import com.socialvagrancy.bluevision.commands.sub.RansomProtect;
 import com.socialvagrancy.bluevision.structures.Inventory;
 import com.socialvagrancy.bluevision.structures.PartitionInfo;
 import com.socialvagrancy.bluevision.structures.MoveDetails;
@@ -117,6 +118,42 @@ public class AdvancedCommands
 		sendMoves(ipaddress, port, move_list, partition, true);
 	}
 
+	public void protectMailSlotTapes(String ipaddress, String port, String partition, boolean printToShell)
+	{
+		logbook.logWithSizedLogRotation("Moving mail slot tapes to unpartitioned spaced", 1);
+		
+		Inventory inv = library.libraryInventory(ipaddress, port, partition);
+
+		logbook.logWithSizedLogRotation("Gathering mail slot tapes", 1);
+		ArrayList<MoveDetails> move_list = RansomProtect.findMailSlotTapes(inv);
+
+		logbook.logWithSizedLogRotation("Gathering freepool slots", 1);
+		ArrayList<String> freepool = RansomProtect.findFreePoolSlots(inv);
+
+		RansomProtect.updateLogs(move_list, freepool, logbook);
+
+		if(printToShell)
+		{
+			if(move_list.size() <= 0)
+			{
+				System.out.println("There are no tapes in entry/exit. No moves will be completed.");
+			}
+			else if(freepool.size()<=0)
+			{
+				System.out.println("There are no slots available in the freepool. No moves will be completed.");
+			}
+			else if(move_list.size() > freepool.size())
+			{
+				System.out.println("There are only " + freepool.size() + " slots in the freepool and " + move_list.size() + " tapes in entry/exit. Tapes will remain in entry/exit once this action completes.");
+			}
+			
+		}
+
+		move_list = RansomProtect.fromMailSlots(move_list, freepool);
+
+		sendMoves(ipaddress, port, move_list, partition, printToShell);
+	}
+
 	//==============================================
 	// Private functions
 	//==============================================
@@ -170,45 +207,20 @@ public class AdvancedCommands
 					|| move_list.get(i).SrcType.equalsIgnoreCase("drive"))
 			{
 				if(printToShell)
+				{		
+					System.out.print("Move " + i + ": " + move_list.get(i).SrcType
+							+ ":" + move_list.get(i).SrcAddress + " > " 
+							+ move_list.get(i).DestType + ":"
+							+ move_list.get(i).DestAddress + "...\t");
+				}
+				
+				response = library.moveMedia(ipaddress, port, move_list.get(i));
+
+				if(printToShell)
 				{
-					System.out.print("Move " + i + ": "
-						+ move_list.get(i).SrcType 
-						+ ":" + move_list.get(i).SrcAddress 
-						+ " > " + move_list.get(i).DestType 
-						+ ":" + move_list.get(i).DestAddress
-						+ "...\t");
+					System.out.println(response);
 				}
 
-				response = library.moveMedia(ipaddress, port, move_list.get(i));
-			
-				if(response.length() == 0)
-				{
-					logbook.logWithSizedLogRotation("Move " + i + ": "
-						+ move_list.get(i).SrcType 
-						+ ":" + move_list.get(i).SrcAddress 
-						+ " > " + move_list.get(i).DestType 
-						+ ":" + move_list.get(i).DestAddress
-						+ "... [SUCCESS]", 2);
-					
-					if(printToShell)
-					{
-						System.out.println("[SUCCESS]");
-					}
-				}
-				else
-				{
-					logbook.logWithSizedLogRotation("Move " + i + ": "
-						+ move_list.get(i).SrcType 
-						+ ":" + move_list.get(i).SrcAddress 
-						+ " > " + move_list.get(i).DestType 
-						+ ":" + move_list.get(i).DestAddress
-						+ "... [FAILED]", 2);
-					
-					if(printToShell)
-					{
-						System.out.println("[FAILED]");
-					}
-				}
 			}
 			else
 			{

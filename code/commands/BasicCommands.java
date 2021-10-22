@@ -90,23 +90,19 @@ public class BasicCommands
 
 		logbook.logWithSizedLogRotation("Issuing move command...", 1);
 		logbook.logWithSizedLogRotation("POST " + url, 2);
-		logbook.logWithSizedLogRotation(move.SrcType + ":" + move.SrcAddress + " to " + move.DestType + ":" + move.DestAddress, 2);
+		logbook.logWithSizedLogRotation("Moving " + move.SrcType + ":" + move.SrcAddress + " to " + move.DestType + ":" + move.DestAddress, 2);
 		
 		String response = conn.POST(url, token, body);
 		
 		if(response.length()==0)
 		{
 			logbook.logWithSizedLogRotation("Move SUCCESSFUL", 2);
-			return "Move: " + move.SrcType + ":" + move.SrcAddress 
-				+ " > " + move.DestType + ":" + move.DestAddress 
-				+"...\t[SUCCESS]";
+			return "[SUCCESS]";
 		}
 		else
 		{
 			logbook.logWithSizedLogRotation("Move FAILED", 2);
-			return "Move: " + move.SrcType + ":" + move.SrcAddress 
-				+ " > " + move.DestType + ":" + move.DestAddress 
-				+"...\t[FAILED]";
+			return	"[FAILED]";
 		}	
 	}
 
