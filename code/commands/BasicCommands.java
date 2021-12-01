@@ -17,6 +17,20 @@ public class BasicCommands
 		logbook = logs;
 	}
 
+	public String inventoryScan(String ipaddress, String port)
+	{
+		String url = URLs.inventoryScanURL(ipaddress, port);
+
+		logbook.logWithSizedLogRotation("Scanning inventory...", 1);
+		logbook.logWithSizedLogRotation("POST " + url, 2);
+		
+		Connector conn = new Connector();
+
+		String response = conn.POST(url, token, "");
+	
+		return response;
+	}
+
 	public Inventory libraryInventory(String ipaddress, String port, String partition)
 	{
 		Gson gson = new Gson();
@@ -37,7 +51,7 @@ public class BasicCommands
 		}
 		catch(JsonParseException e)
 		{
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 
 			return new Inventory();
 		}
@@ -127,7 +141,7 @@ public class BasicCommands
 		}
 		catch(JsonParseException e)
 		{
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return new PartitionInfo[0];
 		}
 	}	

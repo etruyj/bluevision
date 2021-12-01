@@ -47,7 +47,7 @@ public class Connector
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -88,7 +88,7 @@ public class Connector
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 
 		return response.toString();
@@ -130,7 +130,7 @@ public class Connector
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 
 		return response.toString();

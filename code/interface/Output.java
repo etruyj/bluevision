@@ -160,14 +160,14 @@ public class Output
 
 			while((line = br.readLine()) !=null)
 			{
-				System.out.println(line);
+				System.err.println(line);
 			}
 
-			System.out.print("\n");
+			System.err.print("\n");
 		}
 		catch(IOException e)
 		{
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 

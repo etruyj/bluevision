@@ -43,6 +43,11 @@ public class BlueController
 		advanced.ejectListedTapes(ip_address, port, partition_num, file_name, printToShell);
 	}
 
+	public String inventoryScan(String ip_address, String port)
+	{
+		return library.inventoryScan(ip_address, port);
+	}
+
 	public Inventory listInventory(String ip_address, String port, String partition)
 	{
 		String partition_num = partition;

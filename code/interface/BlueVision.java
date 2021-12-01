@@ -17,6 +17,8 @@ public class BlueVision
 
 	public void execute(String ip, String port, String command, String option1, String option2, String option3, String option4, String outputFormat)
 	{
+		String response;
+
 		switch(command)
 		{
 			case "eject-listed-tapes":
@@ -43,7 +45,7 @@ public class BlueVision
 				Output.print(pars);
 				break;
 			case "move-media":
-				String response = controller.moveMedia(ip, port, option1, option2, option3, option4);
+				response = controller.moveMedia(ip, port, option1, option2, option3, option4);
 				Output.print(response);
 				break;
 			case "move-list":
@@ -55,6 +57,14 @@ public class BlueVision
 				break;
 			case "protect-mailslots":
 				controller.protectMailSlots(ip, port, option1, true);
+				break;
+			case "reboot":
+				break;
+			case "scan-inventory":
+				response = controller.inventoryScan(ip, port);
+				Output.print(response);
+				break;
+			case "shutdown":
 				break;
 			case "default":
 				Output.print("Invalid command selected. Please used -c help for a list of valid commands.");
