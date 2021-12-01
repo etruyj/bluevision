@@ -96,4 +96,14 @@ public class BlueController
 	{
 		advanced.protectMailSlotTapes(ip_address, port, partition, printToShell);
 	}
+
+	public String rebootLibrary(String ip_address, String port)
+	{
+		return library.reboot(ip_address, port);
+	}
+
+	public String shutdownLibrary(String ip_address, String port)
+	{
+		return library.shutdown(ip_address, port);
+	}
 }

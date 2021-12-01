@@ -27,7 +27,17 @@ public class BasicCommands
 		Connector conn = new Connector();
 
 		String response = conn.POST(url, token, "");
-	
+
+		if(response.length()>0)
+		{
+			logbook.logWithSizedLogRotation("Failed to scan inventory", 2);
+			logbook.logWithSizedLogRotation(response, 3);
+		}
+		else
+		{
+			logbook.logWithSizedLogRotation("Starting inventory scan", 2);
+		}
+
 		return response;
 	}
 
@@ -145,4 +155,52 @@ public class BasicCommands
 			return new PartitionInfo[0];
 		}
 	}	
+	
+	public String reboot(String ipaddress, String port)
+	{
+		String url = URLs.rebootLibraryURL(ipaddress, port);
+
+		logbook.logWithSizedLogRotation("Rebooting library...", 1);
+		logbook.logWithSizedLogRotation("POST " + url, 2);
+		
+		Connector conn = new Connector();
+
+		String response = conn.POST(url, token, "");
+
+		if(response.length()>0)
+		{
+			logbook.logWithSizedLogRotation("Failed to reboot library", 2);
+			logbook.logWithSizedLogRotation(response, 3);
+		}
+		else
+		{
+			logbook.logWithSizedLogRotation("rebooting...", 2);
+		}
+
+		return response;
+	}
+
+	public String shutdown(String ipaddress, String port)
+	{
+		String url = URLs.shutdownLibraryURL(ipaddress, port);
+
+		logbook.logWithSizedLogRotation("Shutting down library...", 1);
+		logbook.logWithSizedLogRotation("POST " + url, 2);
+		
+		Connector conn = new Connector();
+
+		String response = conn.POST(url, token, "");
+
+		if(response.length()>0)
+		{
+			logbook.logWithSizedLogRotation("Failed to shutdown library", 2);
+			logbook.logWithSizedLogRotation(response, 3);
+		}
+		else
+		{
+			logbook.logWithSizedLogRotation("Shutting down", 2);
+		}
+
+		return response;
+	}
 }

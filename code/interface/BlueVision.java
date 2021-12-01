@@ -59,12 +59,16 @@ public class BlueVision
 				controller.protectMailSlots(ip, port, option1, true);
 				break;
 			case "reboot":
+				response = controller.rebootLibrary(ip, port);
+				Output.print(response);
 				break;
 			case "scan-inventory":
 				response = controller.inventoryScan(ip, port);
 				Output.print(response);
 				break;
 			case "shutdown":
+				response = controller.shutdownLibrary(ip, port);
+				Output.print(response);
 				break;
 			case "default":
 				Output.print("Invalid command selected. Please used -c help for a list of valid commands.");
