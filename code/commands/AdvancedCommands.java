@@ -35,8 +35,8 @@ public class AdvancedCommands
 
 		if(printToShell)
 		{
-			System.out.println("Ejecting tapes specified in " + file_name + "...");
-			System.out.println("Locating entry/exit slots...");
+			System.err.println("Ejecting tapes specified in " + file_name + "...");
+			System.err.println("Locating entry/exit slots...");
 		}
 
 		mailslots = MailSlots.findEmpty(library, ipaddress, port, partition);
@@ -48,7 +48,7 @@ public class AdvancedCommands
 		
 			if(printToShell)
 			{
-				System.out.println("Importing source location from file...");
+				System.err.println("Importing source location from file...");
 			}
 
 			move_list = EjectTapes.prepareMoves(file_name, mailslots);
@@ -66,7 +66,7 @@ public class AdvancedCommands
 
 				if(printToShell)
 				{
-					System.out.println("All (" + report.SrcAddress 
+					System.err.println("All (" + report.SrcAddress 
 							+ ") specified tapes will be moved. (" 
 							+ Integer.toString(mailslots.size()-Integer.valueOf(report.DestAddress)) + ") entry/exit slots are available.");
 				}
@@ -76,7 +76,7 @@ public class AdvancedCommands
 
 			if(printToShell)
 			{
-				System.out.println("Sending moves to Spectra Stack...");
+				System.err.println("Sending moves to Spectra Stack...");
 			}
 
 			sendMoves(ipaddress, port, move_list, partition, true);
@@ -87,7 +87,7 @@ public class AdvancedCommands
 
 			if(printToShell)
 			{
-				System.out.println("No entry/slots available. Cancelling moves.");
+				System.err.println("No entry/slots available. Cancelling moves.");
 			}
 		}
 	}
@@ -136,15 +136,15 @@ public class AdvancedCommands
 		{
 			if(move_list.size() <= 0)
 			{
-				System.out.println("There are no tapes in entry/exit. No moves will be completed.");
+				System.err.println("There are no tapes in entry/exit. No moves will be completed.");
 			}
 			else if(freepool.size()<=0)
 			{
-				System.out.println("There are no slots available in the freepool. No moves will be completed.");
+				System.err.println("There are no slots available in the freepool. No moves will be completed.");
 			}
 			else if(move_list.size() > freepool.size())
 			{
-				System.out.println("There are only " + freepool.size() + " slots in the freepool and " + move_list.size() + " tapes in entry/exit. Tapes will remain in entry/exit once this action completes.");
+				System.err.println("There are only " + freepool.size() + " slots in the freepool and " + move_list.size() + " tapes in entry/exit. Tapes will remain in entry/exit once this action completes.");
 			}
 			
 		}
@@ -185,7 +185,7 @@ public class AdvancedCommands
 
 				if(printToShell)
 				{
-					System.out.println("Searching for slot for barcode [" + move_list.get(i).SrcAddress + "]...");
+					System.err.println("Searching for slot for barcode [" + move_list.get(i).SrcAddress + "]...");
 				}
 
 				move = BarcodeSlot.findSlot(inv, move_list.get(i));
@@ -195,7 +195,7 @@ public class AdvancedCommands
 
 					if(printToShell)
 					{
-						System.out.println("Barcode found at " + move.SrcType + ":" + move.SrcAddress);
+						System.err.println("Barcode found at " + move.SrcType + ":" + move.SrcAddress);
 					}
 
 					move_list.get(i).SrcType = move.SrcType;
@@ -218,7 +218,7 @@ public class AdvancedCommands
 
 				if(printToShell)
 				{
-					System.out.println(response);
+					System.err.println(response);
 				}
 
 			}
@@ -232,7 +232,7 @@ public class AdvancedCommands
 				
 				if(printToShell)
 				{
-					System.out.println("Invalid Move Specified. " 
+					System.err.println("Invalid Move Specified. " 
 							+ move_list.get(i).SrcType + ":"
 							+ move_list.get(i).SrcAddress + " > "
 							+ move_list.get(i).DestType + ":"
