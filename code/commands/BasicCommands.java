@@ -17,6 +17,41 @@ public class BasicCommands
 		logbook = logs;
 	}
 
+	public MailSlotStatus[] mailslotStatus(String ipaddress, String port)
+	{
+		Gson gson = new Gson();
+		Connector conn = new Connector();
+		String url = "";
+
+		url = URLs.mailslotStatusURL(ipaddress, port);
+		logbook.logWithSizedLogRotation("Getting mail lost status...", 1);
+		logbook.logWithSizedLogRotation("GET " + url, 2);
+
+		String response = conn.GET(url, token);
+
+		logbook.logWithSizedLogRotation("Server response: " + response, 2);
+		
+		try
+		{
+			logbook.logWithSizedLogRotation("Status queried successfully", 2);
+			MailSlotStatus[] mailslots = gson.fromJson(response, MailSlotStatus[].class);
+
+			return mailslots;
+		}	
+		catch(JsonParseException e)
+		{
+			logbook.logWithSizedLogRotation("Unable to query mailslot status", 2);
+			logbook.logWithSizedLogRotation(e.getMessage(), 3);
+			
+			return null;
+		}
+	}
+
+	public String getToken()
+	{
+		return token;
+	}
+
 	public String inventoryScan(String ipaddress, String port)
 	{
 		String url = URLs.inventoryScanURL(ipaddress, port);
@@ -129,6 +164,37 @@ public class BasicCommands
 			return	"[FAILED]";
 		}	
 	}
+
+	public String openMailslots(String ipaddress, String port, String module_num)
+	{
+		Connector conn = new Connector();
+		Gson gson = new Gson();
+
+		String url = URLs.openMailslotURL(ipaddress, port);
+
+		String body = "{\"module\": " + module_num + " }";
+
+		logbook.logWithSizedLogRotation("Opening mail slots...", 1);
+		logbook.logWithSizedLogRotation("POST " + url, 2);
+		logbook.logWithSizedLogRotation("body: " + body, 2);
+
+		String response = conn.POST(url, token, body);
+
+		if(response.length() > 0)
+		{
+			logbook.logWithSizedLogRotation("Failed to open mail slots", 3);
+			logbook.logWithSizedLogRotation(response, 3);
+
+			return response;
+		}	
+		else
+		{
+			logbook.logWithSizedLogRotation("Mail slots opened", 2);
+
+			return "Mail slots are unlocked.";
+		}
+	}
+
 
 	public PartitionInfo[] partitionInfo(String ipaddress, String port)
 	{

@@ -17,6 +17,11 @@ public class URLs
 		return "https://" + ipaddress + ":" + port + "/rest/login";
 	}
 
+	public static String mailslotStatusURL(String ipaddress, String port)
+	{
+		return "https://" + ipaddress + ":" + port + "/rest/library/io/status";
+	}
+
 	public static String moveMediaURL(String ipaddress, String port)
 	{
 		return "https://" + ipaddress + ":" + port + "/rest/library/movemedia";

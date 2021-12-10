@@ -6,6 +6,7 @@
 package com.socialvagrancy.bluevision.ui;
 
 import com.socialvagrancy.bluevision.structures.Inventory;
+import com.socialvagrancy.bluevision.structures.MailSlotStatus;
 import com.socialvagrancy.bluevision.structures.PartitionInfo;
 
 import java.io.BufferedReader;
@@ -108,6 +109,27 @@ public class Output
 				println("FWRevision", inv.Drives[i].FWRevision, 1, outputFormat, true);
 				println("SerialNumber", inv.Drives[i].SerialNumber, 1, outputFormat, true);		
 			}
+		}
+	}
+
+	public static void print(MailSlotStatus[] mailslots, String outputFormat)
+	{
+		if(mailslots.length>0)
+		{
+			for(int i=0; i<mailslots.length; i++)
+			{
+				if(outputFormat.equals("shell"))
+				{
+					println("Module: ", mailslots[i].ModuleNo, 0, outputFormat, true);
+					println("Configured: ", String.valueOf(mailslots[i].Configured), 1, outputFormat, true);
+					println("Open: ", String.valueOf(mailslots[i].OpenStatus), 1, outputFormat, true);
+					println("Unlocked: ", String.valueOf(mailslots[i].Unlocked), 1, outputFormat, true);
+				}
+			}
+		}
+		else
+		{
+			System.err.println("Failed to query mail slot status.");
 		}
 	}
 

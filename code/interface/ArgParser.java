@@ -169,6 +169,8 @@ public class ArgParser
 					help_requested = true;
 					break;
 				case "--option1":
+				case "--option":
+				case "--module":
 				case "--source-type":
 				case "--src-type":
 					if((i+1)<args.length)

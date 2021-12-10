@@ -1,6 +1,7 @@
 package com.socialvagrancy.bluevision.ui;
 
 import com.socialvagrancy.bluevision.structures.Inventory;
+import com.socialvagrancy.bluevision.structures.MailSlotStatus;
 import com.socialvagrancy.bluevision.structures.PartitionInfo;
 import com.socialvagrancy.bluevision.utils.BlueController;
 
@@ -26,6 +27,10 @@ public class BlueVision
 			case "eject-list":
 				controller.ejectTapes(ip, port, option1, option4, true);
 				break;
+			case "get-token":
+				response = controller.getToken();
+				Output.print(response);
+				break;
 			case "help":
 				Output.printHelp("../lib/help/basic.txt");
 				Output.printHelp("../lib/help/advanced.txt");
@@ -44,12 +49,20 @@ public class BlueVision
 				ArrayList<String> pars = controller.listPartitions(ip, port);
 				Output.print(pars);
 				break;
+			case "mailslot-status":
+				MailSlotStatus[] status = controller.mailslotStatus(ip, port);
+				Output.print(status, outputFormat);
+				break;
 			case "move-media":
 				response = controller.moveMedia(ip, port, option1, option2, option3, option4);
 				Output.print(response);
 				break;
 			case "move-list":
 				controller.moveList(ip, port, option4, option1);
+				break;
+			case "open-mailslots":
+				response = controller.openMailslots(ip, port, option1);
+				Output.print(response);
 				break;
 			case "partition-info":
 				PartitionInfo[] partitions = controller.partitionInfo(ip, port);

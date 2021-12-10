@@ -15,6 +15,7 @@ import com.socialvagrancy.bluevision.commands.AdvancedCommands;
 import com.socialvagrancy.bluevision.commands.BasicCommands;
 
 import com.socialvagrancy.bluevision.structures.Inventory;
+import com.socialvagrancy.bluevision.structures.MailSlotStatus;
 import com.socialvagrancy.bluevision.structures.MoveDetails;
 import com.socialvagrancy.bluevision.structures.PartitionInfo;
 import com.socialvagrancy.bluevision.structures.Token;
@@ -41,6 +42,16 @@ public class BlueController
 	{
 		String partition_num = partition;
 		advanced.ejectListedTapes(ip_address, port, partition_num, file_name, printToShell);
+	}
+
+	public MailSlotStatus[] mailslotStatus(String ip_address, String port)
+	{
+		return library.mailslotStatus(ip_address, port);
+	}
+
+	public String getToken()
+	{
+		return library.getToken();
 	}
 
 	public String inventoryScan(String ip_address, String port)
@@ -85,6 +96,11 @@ public class BlueController
 		String partition_num = partition;
 
 		advanced.moveList(ip_address, port, partition_num, file_name);
+	}
+
+	public String openMailslots(String ip_address, String port, String module)
+	{
+		return library.openMailslots(ip_address, port, module);
 	}
 
 	public PartitionInfo[] partitionInfo(String ip_address, String port)
