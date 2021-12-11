@@ -119,24 +119,35 @@ public class BasicCommands
 		Connector conn = new Connector();
 
 		String response = conn.POST(url, auth);
-		
-		try
+	
+	
+		if(response.equals("") || response == null)
 		{
-			Token tok = gson.fromJson(response, Token.class);
-		
-			token = tok.getToken();
-
-			logbook.logWithSizedLogRotation("Login SUCCESSFUL", 2);
-
-			return true;
-		}
-		catch(JsonParseException e)
-		{
-			logbook.logWithSizedLogRotation("ERROR: " + e.getMessage(), 3);
-			logbook.logWithSizedLogRotation("Login FAILED", 2);
-
+			logbook.logWithSizedLogRotation("Login FAILED. Invalid credentials", 2);
 			return false;
 		}
+		else
+		{		
+			try
+			{
+
+				Token tok = gson.fromJson(response, Token.class);
+			
+				token = tok.getToken();
+
+				logbook.logWithSizedLogRotation("Login SUCCESSFUL", 2);
+
+				return true;
+			}
+			catch(JsonParseException e)
+			{
+				logbook.logWithSizedLogRotation("ERROR: " + e.getMessage(), 3);
+				logbook.logWithSizedLogRotation("Login FAILED", 2);
+
+				return false;
+			}
+		}
+		
 	}
 
 	public String moveMedia(String ipaddress, String port, MoveDetails move)
