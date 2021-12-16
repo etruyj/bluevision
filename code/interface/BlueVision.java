@@ -68,6 +68,10 @@ public class BlueVision
 				PartitionInfo[] partitions = controller.partitionInfo(ip, port);
 				Output.print(partitions, outputFormat);
 				break;
+			case "partition-inventory":
+				Inventory par_inv = controller.partitionInventory(ip, port, option1);
+				Output.print(par_inv, outputFormat);
+				break;
 			case "protect-mailslots":
 				controller.protectMailSlots(ip, port, option1, true);
 				break;

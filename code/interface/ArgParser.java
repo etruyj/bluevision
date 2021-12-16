@@ -171,6 +171,7 @@ public class ArgParser
 				case "--option1":
 				case "--option":
 				case "--module":
+				case "--partition":
 				case "--source-type":
 				case "--src-type":
 					if((i+1)<args.length)

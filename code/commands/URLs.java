@@ -37,14 +37,14 @@ public class URLs
 		return "https://" + ipaddress + ":" + port + "/rest/partition/information";
 	}
 
-	public static String partitionInventoryURL(String ipaddress, String port)
+	public static String partitionInventoryURL(String ipaddress, String port, String partition_number)
 	{
-		return "https://" + ipaddress + ":" + port + "/rest/partition/inventory";
+		return "https://" + ipaddress + ":" + port + "/rest/partition/inventory?partitionNum=" + partition_number;
 	}
 
-	public static String partitionMedia(String ipaddress, String port)
+	public static String partitionMedia(String ipaddress, String port, String partition_number)
 	{
-		return "https://" + ipaddress + ":" + port + "/rest/partition/mediainfo";
+		return "https://" + ipaddress + ":" + port + "/rest/partition/mediainfo?partitionNum=" + partition_number;
 	}
 
 	public static String rebootLibraryURL(String ipaddress, String port)

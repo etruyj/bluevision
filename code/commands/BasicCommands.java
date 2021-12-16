@@ -233,6 +233,32 @@ public class BasicCommands
 		}
 	}	
 	
+	public Inventory partitionInventory(String ipaddress, String port, String partition_num)
+	{
+		Gson gson = new Gson();
+
+		String url = URLs.partitionInventoryURL(ipaddress, port, partition_num);
+
+		Connector conn = new Connector();
+		
+		logbook.logWithSizedLogRotation("Requesting inventory for partition " + partition_num + "...", 1);
+		logbook.logWithSizedLogRotation("GET " + url, 2);
+	
+		String response = conn.GET(url, token);
+
+		try
+		{
+			Inventory inventory = gson.fromJson(response, Inventory.class);
+			
+			return inventory;
+		}
+		catch(JsonParseException e)
+		{
+			System.err.println(e.getMessage());
+			return new Inventory();
+		}
+	}
+
 	public String reboot(String ipaddress, String port)
 	{
 		String url = URLs.rebootLibraryURL(ipaddress, port);

@@ -108,6 +108,11 @@ public class BlueController
 		return library.partitionInfo(ip_address, port);
 	}
 
+	public Inventory partitionInventory(String ip_address, String port, String partition_num)
+	{
+		return library.partitionInventory(ip_address, port, partition_num);
+	}
+	
 	public void protectMailSlots(String ip_address, String port, String partition, boolean printToShell)
 	{
 		advanced.protectMailSlotTapes(ip_address, port, partition, printToShell);
