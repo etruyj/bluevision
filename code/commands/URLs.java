@@ -2,6 +2,11 @@ package com.socialvagrancy.bluevision.commands;
 
 public class URLs
 {
+	public static String createSimplePartitionURL(String ipaddress, String port)
+	{
+		return "https://" + ipaddress + ":" + port + "/rest/partition/createsimple";
+	}
+
 	public static String inventoryScanURL(String ipaddress, String port)
 	{
 		return "https://" + ipaddress + ":" + port + "/rest/library/inventory";
@@ -42,7 +47,7 @@ public class URLs
 		return "https://" + ipaddress + ":" + port + "/rest/partition/inventory?partitionNum=" + partition_number;
 	}
 
-	public static String partitionMedia(String ipaddress, String port, String partition_number)
+	public static String partitionMediaURL(String ipaddress, String port, String partition_number)
 	{
 		return "https://" + ipaddress + ":" + port + "/rest/partition/mediainfo?partitionNum=" + partition_number;
 	}

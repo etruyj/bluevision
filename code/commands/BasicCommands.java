@@ -17,6 +17,39 @@ public class BasicCommands
 		logbook = logs;
 	}
 
+	public PartitionInfo[] createSimplePartition(String ipaddress, String port, String num_partitions, String barcode_length, String barcode_alignment, String autoClean)
+	{
+		Gson gson = new Gson();
+
+		String url = URLs.createSimplePartitionURL(ipaddress, port);
+
+		Connector conn = new Connector();
+		
+		logbook.logWithSizedLogRotation("Creating (" + num_partitions + ") partitions in simple mode...", 1);
+		logbook.logWithSizedLogRotation("GET " + url, 2);
+		
+		String body = "{\"numPartitions\":" + num_partitions 
+				+ ", \"barcodeLength\": " + barcode_length 
+				+ ", \"barcodeAlignment\": " + barcode_alignment
+				+ ", \"autoClean\": " + autoClean + " }";
+
+		logbook.logWithSizedLogRotation("body: " + body, 2);
+
+		String response = conn.POST(url, token, body);
+
+		try
+		{
+			PartitionInfo[] partitions = gson.fromJson(response, PartitionInfo[].class);
+			
+			return partitions;
+		}
+		catch(JsonParseException e)
+		{
+			System.err.println(e.getMessage());
+			return new PartitionInfo[0];
+		}
+	}	
+	
 	public MailSlotStatus[] mailslotStatus(String ipaddress, String port)
 	{
 		Gson gson = new Gson();
@@ -256,6 +289,32 @@ public class BasicCommands
 		{
 			System.err.println(e.getMessage());
 			return new Inventory();
+		}
+	}
+
+	public MediaInfo[] partitionMedia(String ipaddress, String port, String partition_num)
+	{
+		Gson gson = new Gson();
+
+		String url = URLs.partitionMediaURL(ipaddress, port, partition_num);
+
+		Connector conn = new Connector();
+		
+		logbook.logWithSizedLogRotation("Requesting media list for partition " + partition_num + "...", 1);
+		logbook.logWithSizedLogRotation("GET " + url, 2);
+	
+		String response = conn.GET(url, token);
+
+		try
+		{
+			MediaInfo[] media = gson.fromJson(response, MediaInfo[].class);
+			
+			return media;
+		}
+		catch(JsonParseException e)
+		{
+			System.err.println(e.getMessage());
+			return new MediaInfo[0];
 		}
 	}
 

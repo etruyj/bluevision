@@ -13,6 +13,7 @@ public class ArgParser
 	private String option4;
 	private String output_format;
 	private boolean help_requested;
+	private boolean boolean_flag;
 	private boolean option1_set;
 	private boolean option2_set;
 	private boolean option3_set;
@@ -32,6 +33,7 @@ public class ArgParser
 		option4 = "none";
 		output_format = "shell";
 		help_requested = false;
+		boolean_flag = false;
 		option1_set = false;
 		option2_set = false;
 		option3_set = false;
@@ -54,11 +56,26 @@ public class ArgParser
 	public String getPort() { return port; }
 	public String getUsername() { return username; }
 	public boolean helpRequested() { return help_requested; } 
+	public boolean getBooleanFlag() { return boolean_flag; }
 
 	//==============================================
 	//	Parser
 	//==============================================
 	
+	public void setBooleanFlag(boolean opt)
+	{
+		if(boolean_flag)
+		{
+			// Already set
+			isValid = false;
+		}
+		else
+		{
+			// not set
+			boolean_flag = opt;
+		}
+	}
+
 	public void setOption1(String option)
 	{
 		if(!option1_set)
@@ -148,6 +165,10 @@ public class ArgParser
 		{
 			switch(args[i])
 			{
+				case "--boolean-flag":
+				case "--auto-clean":
+					setBooleanFlag(true);
+					break;
 				case "-c":
 				case "--command":
 					if((i+1)<args.length)
@@ -170,9 +191,10 @@ public class ArgParser
 					break;
 				case "--option1":
 				case "--option":
-				case "--module":
-				case "--partition":
-				case "--source-type":
+				case "--module": // module number
+				case "--partition": // Partition number
+				case "--partition-count": // num partitions (2.9.1) create partitions in simple mode.
+				case "--source-type": // slot, drive?
 				case "--src-type":
 					if((i+1)<args.length)
 					{
@@ -181,7 +203,8 @@ public class ArgParser
 					}
 					break;
 				case "--option2":
-				case "--slot":
+				case "--barcode-length": // (2.9.1) create partitions in simple mode.
+				case "--slot": // slot number
 				case "--source":
 					if((i+1)<args.length)
 					{
@@ -190,7 +213,9 @@ public class ArgParser
 					}
 					break;	
 				case "--option3":
-				case "--destination-type":
+				case "--barcode-alignment": // (2.9.1) create partitions in simple mode.
+				case "--barcode-align": // abbrv of above.
+				case "--destination-type": // slot, drive
 				case "--dest-type":
 				case "--target-type":
 					if((i+1)<args.length)
@@ -200,7 +225,7 @@ public class ArgParser
 					}
 					break;	
 				case "--option4":
-				case "--destination":
+				case "--destination": // slot number
 				case "--input-file":
 				case "--target":
 					if((i+1)<args.length)

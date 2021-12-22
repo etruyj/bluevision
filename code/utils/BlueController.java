@@ -16,6 +16,7 @@ import com.socialvagrancy.bluevision.commands.BasicCommands;
 
 import com.socialvagrancy.bluevision.structures.Inventory;
 import com.socialvagrancy.bluevision.structures.MailSlotStatus;
+import com.socialvagrancy.bluevision.structures.MediaInfo;
 import com.socialvagrancy.bluevision.structures.MoveDetails;
 import com.socialvagrancy.bluevision.structures.PartitionInfo;
 import com.socialvagrancy.bluevision.structures.Token;
@@ -37,6 +38,22 @@ public class BlueController
 		library = new BasicCommands(logbook);
 		advanced = new AdvancedCommands(library, logbook);
 	}
+
+	public PartitionInfo[] createSimplePartitions(String ip_address, String port, String num_partitions, String barcode_length, String barcode_alignment, boolean autoClean)
+	{
+		String flag;
+
+		if(autoClean)
+		{
+			flag = "TRUE";
+		}
+		else
+		{
+			flag = "FALSE";
+		}
+
+		return library.createSimplePartition(ip_address, port, num_partitions, barcode_length, barcode_alignment, flag);
+	}	
 
 	public void ejectTapes(String ip_address, String port, String partition, String file_name, boolean printToShell)
 	{
@@ -112,7 +129,12 @@ public class BlueController
 	{
 		return library.partitionInventory(ip_address, port, partition_num);
 	}
-	
+
+	public MediaInfo[] partitionMedia(String ip_address, String port, String partition_num)
+	{
+		return library.partitionMedia(ip_address, port, partition_num);
+	}
+
 	public void protectMailSlots(String ip_address, String port, String partition, boolean printToShell)
 	{
 		advanced.protectMailSlotTapes(ip_address, port, partition, printToShell);

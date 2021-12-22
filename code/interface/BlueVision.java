@@ -16,12 +16,15 @@ public class BlueVision
 		controller = new BlueController();
 	}
 
-	public void execute(String ip, String port, String command, String option1, String option2, String option3, String option4, String outputFormat)
+	public void execute(String ip, String port, String command, String option1, String option2, String option3, String option4, boolean flag, String outputFormat)
 	{
 		String response;
 
 		switch(command)
 		{
+			case "create-simple-partitions":
+				controller.createSimplePartitions(ip, port, option1, option2, option3, flag);
+				break;
 			case "eject-listed-tapes":
 			case "eject-listed":
 			case "eject-list":
@@ -112,11 +115,11 @@ public class BlueVision
 			}
 			else if(aparser.getCommand().substring(0, 4).equals("help"))
 			{
-				ui.execute("", "",  aparser.getCommand(), "", "", "", "", "");
+				ui.execute("", "",  aparser.getCommand(), "", "", "", "", false, "");
 			}
 			else if(ui.login(aparser.getIP(), aparser.getPort(), aparser.getUsername(), aparser.getPassword()))
 			{
-				ui.execute(aparser.getIP(), aparser.getPort(), aparser.getCommand(), aparser.getOption1(), aparser.getOption2(), aparser.getOption3(), aparser.getOption4(), aparser.getOutputFormat());
+				ui.execute(aparser.getIP(), aparser.getPort(), aparser.getCommand(), aparser.getOption1(), aparser.getOption2(), aparser.getOption3(), aparser.getOption4(), aparser.getBooleanFlag(), aparser.getOutputFormat());
 			}
 			else
 			{
