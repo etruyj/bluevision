@@ -2,6 +2,7 @@ package com.socialvagrancy.bluevision.ui;
 
 import com.socialvagrancy.bluevision.structures.Inventory;
 import com.socialvagrancy.bluevision.structures.MailSlotStatus;
+import com.socialvagrancy.bluevision.structures.MediaInfo;
 import com.socialvagrancy.bluevision.structures.PartitionInfo;
 import com.socialvagrancy.bluevision.ui.display.Display;
 import com.socialvagrancy.bluevision.utils.BlueController;
@@ -74,7 +75,11 @@ public class BlueVision
 				break;
 			case "partition-inventory":
 				Inventory par_inv = controller.partitionInventory(ip, port, option1);
-				Output.print(par_inv, outputFormat);
+				Display.output(par_inv, outputFormat);
+				break;
+			case "partition-media":
+				MediaInfo[] media = controller.partitionMedia(ip, port, option1);
+				Display.output(media, outputFormat);
 				break;
 			case "protect-mailslots":
 				controller.protectMailSlots(ip, port, option1, true);

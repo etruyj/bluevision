@@ -46,6 +46,30 @@ public class Display
 		}
 	}
 
+	public static void output(MediaInfo[] media, String output_format)
+	{
+		if(output_format.equals("json"))
+		{
+			// Use Gson for the conversion
+			// and print immediately to screen.
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			System.out.println(gson.toJson(media));
+		}
+		else
+		{
+			ArrayList<FormattedOutput> output = Serializer.convert(media);
+		
+			if(output_format.equals("xml"))
+			{
+				XML.print(output);
+			}
+			else if(output_format.equals("shell"))
+			{
+				Shell.print(output);
+			}
+		}
+	}
+
 	public static void output(PartitionInfo[] pars, String output_format)
 	{
 		if(output_format.equals("json"))
