@@ -66,6 +66,47 @@ public class Inventory
 		return "none";
 	}
 
+	public void trimWhiteSpace()
+	{
+		/*
+		for(int s=0; s<slotCount(); s++)
+		{
+			Slots[s].PhysicalNumber = Slots[s].PhysicalNumber.trim();
+			Slots[s].LogicalNumber = Slots[s].LogicalNumber.trim();
+			Slots[s].Module = Slots[s].Module.trim();
+			Slots[s].Partition = Slots[s].Partition.trim();
+			Slots[s].Mailslot = Slots[s].Mailslot.trim();
+			Slots[s].Cartridge = Slots[s].Cartridge.trim();
+			
+			if(Slots[s].Barcode != null)
+			{
+				Slots[s].Barcode = Slots[s].Barcode.trim();
+			}
+			
+			Slots[s].CartridgeType = Slots[s].CartridgeType.trim();
+			Slots[s].CartridgeGeneration = Slots[s].CartridgeGeneration.trim();
+			Slots[s].CartridgeEncrypted = Slots[s].CartridgeEncrypted.trim();
+			Slots[s].Access = Slots[s].Access.trim();
+
+			if(Slots[s].Blocked != null)
+			{
+				Slots[s].Blocked = Slots[s].Blocked.trim();
+			}
+		}
+		*/
+		for(int d=0; d<driveCount(); d++)
+		{
+			Drives[d].PhysicalNumber = Drives[d].PhysicalNumber.trim();
+			Drives[d].LogicalNumber = Drives[d].LogicalNumber.trim();
+			Drives[d].Module = Drives[d].Module.trim();
+			Drives[d].Partition = Drives[d].Partition.trim();
+			Drives[d].Vendor = Drives[d].Vendor.trim();
+			Drives[d].Product = Drives[d].Product.trim();
+			Drives[d].FWRevision = Drives[d].FWRevision.trim();
+			Drives[d].SerialNumber = Drives[d].SerialNumber.trim();
+		}
+	}
+
 	public class Slot
 	{
 		public String PhysicalNumber;

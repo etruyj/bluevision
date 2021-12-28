@@ -125,7 +125,9 @@ public class BasicCommands
 
 		try
 		{
-			return gson.fromJson(response, Inventory.class);
+			Inventory inv = gson.fromJson(response, Inventory.class);
+			inv.trimWhiteSpace();
+			return inv;
 		}
 		catch(JsonParseException e)
 		{

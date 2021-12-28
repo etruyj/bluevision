@@ -3,6 +3,7 @@ package com.socialvagrancy.bluevision.ui;
 import com.socialvagrancy.bluevision.structures.Inventory;
 import com.socialvagrancy.bluevision.structures.MailSlotStatus;
 import com.socialvagrancy.bluevision.structures.PartitionInfo;
+import com.socialvagrancy.bluevision.ui.display.Display;
 import com.socialvagrancy.bluevision.utils.BlueController;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class BlueVision
 				break;
 			case "list-inventory":
 				Inventory inv = controller.listInventory(ip, port, option1);
-				Output.print(inv, outputFormat);
+				Display.output(inv, outputFormat);
 				break;
 			case "list-partitions":
 				ArrayList<String> pars = controller.listPartitions(ip, port);
@@ -69,7 +70,7 @@ public class BlueVision
 				break;
 			case "partition-info":
 				PartitionInfo[] partitions = controller.partitionInfo(ip, port);
-				Output.print(partitions, outputFormat);
+				Display.output(partitions, outputFormat);
 				break;
 			case "partition-inventory":
 				Inventory par_inv = controller.partitionInventory(ip, port, option1);
