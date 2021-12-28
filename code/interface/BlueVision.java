@@ -56,7 +56,7 @@ public class BlueVision
 				break;
 			case "mailslot-status":
 				MailSlotStatus[] status = controller.mailslotStatus(ip, port);
-				Output.print(status, outputFormat);
+				Display.output(status, outputFormat);
 				break;
 			case "move-media":
 				response = controller.moveMedia(ip, port, option1, option2, option3, option4);

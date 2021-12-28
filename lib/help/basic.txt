@@ -2,6 +2,13 @@ Basic Commands
 
 These are the basic commands that query the specified API on the Stack. These commands are documented in the Spectra Stack API documentation.
 
+create-simple-partitions Creates N partitions out of the available storage slots. Requires --partition-count and option parameters of --barcode-length, --barcode-alignment, and --auto-clean
 list-inventory		List information on all slots and drives in the library.
+mailslot-status		Displays the status of each module's entry/exit or mailslots.
 move-media		Sends a move command to the libary. Must specify --source-type, --source, --target-type, and --target
+open-mailslots		Open entry/exit (mailslots) in the specified --module.
 partition-info		Lists information on all partitions in the library.
+partition-media		Prints all media in the specified partition number. Use --partition to denote the number.
+reboot			Reboot the Stack library.
+scan-inventory		Executes an inventory scan of the library.
+shutdown		Powers off the Stack library

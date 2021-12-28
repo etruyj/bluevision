@@ -149,6 +149,59 @@ public class Serializer
 
 		for(int i=0; i<mailslots.length; i++)
 		{
+			line = new FormattedOutput();
+			line.header = "MailSlotStatus>Mailslots>ModuleNo";
+			line.value = mailslots[i].ModuleNo;
+			output.add(line);
+
+			line = new FormattedOutput();
+			line.header = "MailSlotStatus>Mailslots>Configured";
+			
+			if(mailslots[i].Configured)
+			{
+				line.value = "TRUE";
+			}
+			else
+			{
+				line.value = "FALSE";
+			}
+				
+			output.add(line);
+
+			line = new FormattedOutput();
+			line.header = "MailSlotStatus>Mailslots>OpenStatus";
+			
+			if(mailslots[i].OpenStatus)
+			{
+				line.value = "TRUE";
+			}
+			else
+			{
+				line.value = "FALSE";
+			}
+				
+			output.add(line);
+
+			line = new FormattedOutput();
+			line.header = "MailSlotStatus>Mailslots>Unlocked";
+			
+			if(mailslots[i].Unlocked)
+			{
+				line.value = "TRUE";
+			}
+			else
+			{
+				line.value = "FALSE";
+			}
+				
+			output.add(line);
+
+
+			line = new FormattedOutput();
+			line.header = "MailSlotStatus>Mailslots";
+			line.value = null;
+			output.add(line);
+
 		}
 
 		return output;
