@@ -26,24 +26,37 @@ Some of the flags can be abbreviated to their initial letter. This can be seen i
 `./blue_api -e IP_ADDRESS -u USERNAME -p PASSWORD -c eject-list --intput-file tapes.csv`
 
 ### Options
---command(-c)&emsp;The command to be executed. Commands can be listed with -c help, -c help-basic, or -c help-advanced  
---endpoint(-e)&emsp;&ensp;IP Address of the Stack  
---input-file&emsp;&emsp;&emsp;&ensp;File to be read from  
---password(-p)&emsp;Password  
---port&emsp;&emsp;&emsp;&emsp;&ensp;The port the API is listening to if a non-standard port.  
---source&emsp;&emsp;&emsp;&ensp;The source address for a specified move, e.g. 1.1  
---source-type&emsp;&ensp;The type of source being specified for a move, e.g. drive or slot.  
---target&emsp;&emsp;&emsp;&emsp;&ensp;The target address for a specified move, eg. 1.71  
---target-type&emsp;&ensp;The type of target being speficied for a move, e.g. drive or slot.  
---username(-u)&emsp;&ensp;Username  
+--auto-clean		Set the create-simple-partitions to be autocleaned.
+--barcode-align		Specify left or right alignment for reading of barcodes with the create-simple-partitions command.
+--barcode-length	Specify the number of characters for which barcodes will be reported.
+--command(-c)		The command to be executed. Commands can be listed with -c help, -c help-basic, or -c help-advanced
+--endpoint(-e)		IP Address of the Stack
+--input-file		File to be read from
+--module		Specify the Stack module number.
+--partition		Specify the partition number
+--partition-count 	Specify the number of partitions to create in create-simple-partitions. 
+--password(-p)  	Password
+--port			The port the API is listening to if a non-standard port.
+--source		The source address for a specified move, e.g. 1.1
+--source-type		The type of source being specified for a move, e.g. drive or slot.
+--target		The target address for a specified move, eg. 1.71
+--target-type		The type of target being speficied for a move, e.g. drive or slot.
+--username(-u)		Username
 
 ### Commands
+create-simple-partitions Creates N partitions out of the available storage slots. Requires --partition-count and option parameters of --barcode-length, --barcode-alignment, and --auto-clean
 eject-list          Ejects all the tapes or slots specified in an eject list file. Requires --input-file  
 list-inventory    List information on all slots and drives in the library.  
 list-partitions   Prints all partition names.  
+mailslot-status		Displays the status of each module's entry/exit or mailslots.
 move-list           Executes the moves specified in a move list file. Requires --input-file  
 move-media        Sends a move command to the libary. Must specify --source-type, --source, --target-type, and --target  
+open-mailslots		Open entry/exit (mailslots) in the specified --module.
 partition-info      Lists information on all partitions in the library.  
+partition-media		Prints all media in the specified partition number. Use --partition to denote the number.
+reboot			Reboot the Stack library.
+scan-inventory		Executes an inventory scan of the library.
+shutdown		Powers off the Stack library
 
 ### Input Files
 Some commands accept an input file (specified with the --input-file flag) in order to push information to the script. This section will explain how to configure those commands. With the exception of newlines, do not enter white space in these files.
