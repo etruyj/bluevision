@@ -29,7 +29,7 @@ public class RansomProtect
 		}
 
 		// Remove unassigned slots
-		for(int i=itr; i<mail_slots.size(); i++)
+		while(mail_slots.size() > itr)
 		{
 			mail_slots.remove(itr);
 		}
