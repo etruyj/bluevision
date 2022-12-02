@@ -9,6 +9,7 @@ This script provides access to the Spectra Stack via the API. Available commands
 --endpoint(-e)		IP Address of the Stack
 --input-file		File to be read from
 --module		Specify the Stack module number.
+--output-format		Determine the display format for the response. Defaults to shell. Accepts json and xml as well.
 --partition		Specify the partition number
 --partition-count 	Specify the number of partitions to create in create-simple-partitions. 
 --password(-p)  	Password

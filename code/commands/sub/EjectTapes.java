@@ -120,6 +120,7 @@ public class EjectTapes
 			
 			while((line = br.readLine()) != null)
 			{
+				System.err.println("import line: " + line);
 				source.add(line);
 			}
 		}
@@ -129,6 +130,8 @@ public class EjectTapes
 			source.add("ERROR: " + e.getMessage());
 		}
 		
+		System.err.println("tapes imported: " + source.size());
+
 		return source;
 	}
 }
