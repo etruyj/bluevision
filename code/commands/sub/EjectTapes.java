@@ -23,16 +23,27 @@ public class EjectTapes
 		ArrayList<MoveDetails> move_list = new ArrayList<MoveDetails>();
 		MoveDetails move;
 
-		int src = 0;
+		int list_size = source.size();
+		int tapes_queued = 0;
 		int dest = 0;
 		String[] slot;
 
-		while((src < source.size()) && (dest < mailslots.size()))
+		while((source.size() > 0) && (dest < mailslots.size()))
 		{
 			move = new MoveDetails();
 			
-			slot = source.get(src).split(":");
-			source.remove(0);
+			slot = source.get(0).split(":");
+
+			// Convert lines imported from the file
+			// to move format.
+			//
+			// Allowed inputs:
+			// 	- barcode:000001L8
+			// 	- bc:000001L8
+			// 	- 000001L8
+			// 	- slot:1.5
+			// 
+			// Split on : to see if just the barcode was specified.
 
 			if(slot[0].equalsIgnoreCase("slot"))
 			{
@@ -53,6 +64,25 @@ public class EjectTapes
 				move.DestAddress = mailslots.get(dest);
 				dest++;
 			}
+			else if(slot[0].equals("barcode") || slot[0].equals("bc"))
+			{
+				// Test for either valid barcode input.
+				move.SrcType = "barcode";
+				move.SrcAddress = slot[1];
+				move.DestType = "Slot";
+				move.DestAddress = mailslots.get(dest);
+				dest++;
+			}
+			else
+			{
+				// Move is invalid.
+				System.err.println("ERROR: Invalid move specified: " + source.get(0));
+				move = null;
+			}
+			/*
+			 * Mark for deletion on v1.2.2
+			 * 	Not sure why this code was here.
+			 * 	
 			else if(!slot[0].equals("ERROR"))
 			{
 				// (Hopefully) a barcode was entered.
@@ -62,26 +92,40 @@ public class EjectTapes
 				move.DestAddress = mailslots.get(dest);
 				dest++;	
 			}
-			
-			move_list.add(move);
+			*/
 
-			src++;
+
+			if(move != null)
+			{
+				move_list.add(move);
+				tapes_queued++;
+			}
+		
+			// Instead of incrementing the src counter, remove 0 reference.
+			// This allows us to accurately rebuild the move queue with moves
+			// that weren't execute.	
+			source.remove(0);
 		}
 
-		// Cheating on my reporting...
+		// Storage reporting - Were all listed moves queued?
+		// 	Create an entry at the end of the move queue stating
+		// 	all the listed tapes have been queued. As we're reporting
+		// 	in a different function (command/AdvancedCommands.java),
+		// 	there's no way to tell if all tapes were moved at that level.
+		// 	This is a bit of a cheat.
 		move = new MoveDetails();
 		
-		if(src >= source.size())
+		if(tapes_queued >= list_size)
 		{
 			move.SrcType = "All";
-			move.SrcAddress = Integer.toString(src);
-			move.DestAddress = Integer.toString(dest);
+			move.SrcAddress = Integer.toString(tapes_queued);
+			move.DestAddress = Integer.toString((mailslots.size() - dest));
 		}
 		else
 		{
 			move.DestType = "All";
-			move.SrcAddress = Integer.toString(src);
-			move.DestAddress = Integer.toString(dest);
+			move.SrcAddress = Integer.toString(tapes_queued);
+			move.DestAddress = Integer.toString((mailslots.size() - dest));
 		}
 		
 		move_list.add(move);
@@ -93,8 +137,10 @@ public class EjectTapes
 
 	public static void exportRemaining(ArrayList<String> source, String file_name)
 	{
+		
 		if(source.size()>0)
 		{
+			System.err.println("Writing remaining (" + source.size() + ") moves back to " + file_name);
 			FileManager fman = new FileManager();
 			fman.createFileDeleteOld(file_name, true);
 
@@ -102,6 +148,12 @@ public class EjectTapes
 			{
 				fman.appendToFile(file_name, source.get(i));
 			}
+		}
+		else
+		{
+			// All sources are used.
+			System.err.println("No moves remain. Deleting file.");
+			new File(file_name).delete();
 		}
 	}
 
@@ -120,7 +172,6 @@ public class EjectTapes
 			
 			while((line = br.readLine()) != null)
 			{
-				System.err.println("import line: " + line);
 				source.add(line);
 			}
 		}
@@ -130,8 +181,6 @@ public class EjectTapes
 			source.add("ERROR: " + e.getMessage());
 		}
 		
-		System.err.println("tapes imported: " + source.size());
-
 		return source;
 	}
 }

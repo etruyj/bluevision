@@ -62,13 +62,13 @@ public class AdvancedCommands
 				
 				logbook.logWithSizedLogRotation("All (" + report.SrcAddress 
 							+ ") specified tapes will be moved. (" 
-							+ Integer.toString(mailslots.size()-Integer.valueOf(report.DestAddress)) + ") entry/exit slots are available.", 1);
+							+ Integer.toString(mailslots.size()-Integer.valueOf(report.DestAddress)) + ") entry/exit slots remain available.", 1);
 
 				if(printToShell)
 				{
 					System.err.println("All (" + report.SrcAddress 
 							+ ") specified tapes will be moved. (" 
-							+ Integer.toString(mailslots.size()-Integer.valueOf(report.DestAddress)) + ") entry/exit slots are available.");
+							+ Integer.toString(mailslots.size()-Integer.valueOf(report.DestAddress)) + ") entry/exit slots remain available.");
 				}
 			}
 			
